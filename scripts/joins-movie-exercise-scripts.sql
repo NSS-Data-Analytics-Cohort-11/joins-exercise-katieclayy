@@ -110,35 +110,15 @@ ORDER BY rating.imdb_rating DESC;
 
 
 --Q7.) Which have a higher average rating, movies which are over two hours long or movies which are under two hours?
-SELECT specs.length_in_min, COUNT(specs.length_in_min),AVG(rating.imdb_rating)
-FROM specs
-INNER JOIN rating
-ON specs.movie_id = rating.movie_id
-GROUP BY specs.length_in_min
-ORDER BY COUNT(specs.length_in_min) DESC;
-
-
-SELECT
-AVG(rating.imdb_rating), 
-specs.length_in_min,
-CASE
-	WHEN specs.length_in_min > 120 THEN COUNT(specs.length_in_min)
-	WHEN specs.length_in_min < 120 THEN COUNT(specs.length_in_min)
-	END
-FROM specs
-INNER JOIN rating
-ON specs.movie_id = rating.movie_id
-GROUP BY specs.length_in_min,specs.length_in_min >120, specs.length_in_min <120
-ORDER BY COUNT(specs.length_in_min) DESC
-
---answer 7.)
 SELECT 
 AVG(rating.imdb_rating), 
-COUNT(specs.length_in_min),
-CASE WHEN specs.length_in_min >= 120 THEN 'longer than 2 hours'
-WHEN specs.length_in_min < 120 THEN 'less than 2 hours'
-ELSE 'other' END AS length_in_movie
+CASE WHEN specs.length_in_min > 120 THEN 'movies longer than 2 hours'
+WHEN specs.length_in_min < 120 THEN 'movies less than 2 hours'
+ELSE 'movie is 2 hours' END AS length_in_movie
 FROM specs
 INNER JOIN rating
 ON specs.movie_id = rating.movie_id
 GROUP BY length_in_movie
+ORDER BY AVG(rating.imdb_rating) DESC;
+
+--answer 7.) movies longer than 2 hours have higher rating
