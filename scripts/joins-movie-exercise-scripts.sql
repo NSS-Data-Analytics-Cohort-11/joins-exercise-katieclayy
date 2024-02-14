@@ -20,7 +20,7 @@ LIMIT 1;
 
 --answer 1.) Film: Semi-Tough, release year: 1977, worldwide gross: 37187139
 
-
+  
 --Q2.) What year has the highest average imdb rating?
 SELECT specs.release_year, AVG(rating.imdb_rating)
 FROM specs
